@@ -26,3 +26,7 @@ build_script:
   - ps: ./appveyor.ps1
 
 test: off
+
+artifacts:
+- path: C:\projects\sonar-resharper\target\sonar-resharper-plugin.jar
+  name: sonar-resharper-plugin.jar
