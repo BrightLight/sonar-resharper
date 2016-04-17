@@ -170,7 +170,7 @@ public class ReSharperSensor implements Sensor {
   }
 
   private static void logSkippedIssue(ReSharperIssue issue, String reason) {
-    LOG.info("Skipping the ReSharper issue at line " + issue.reportLine() + " " + reason);
+    LOG.debug("Skipping the ReSharper issue at line " + issue.reportLine() + " " + reason);
   }
 
   private List<String> enabledRuleKeys() {
