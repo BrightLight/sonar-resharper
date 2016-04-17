@@ -28,4 +28,4 @@ build_script:
 test: off
 
 artifacts:
-- path: - path: '**\sonar-resharper-plugin.jar' # find sonar-resharper-plugin.jar anywhere
+- path: '**\sonar-resharper-plugin.jar' # find sonar-resharper-plugin.jar anywhere
