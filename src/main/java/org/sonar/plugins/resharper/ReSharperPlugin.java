@@ -29,6 +29,7 @@ import java.util.List;
 
 public class ReSharperPlugin extends SonarPlugin {
 
+  public static final String PROJECT_NAME_SONAR_PROPERTY_KEY = "sonar.projectName";
   public static final String PROJECT_NAME_PROPERTY_KEY = "sonar.resharper.projectName";
   public static final String SOLUTION_FILE_PROPERTY_KEY = "sonar.resharper.solutionFile";
   public static final String INSPECTCODE_PATH_PROPERTY_KEY = "sonar.resharper.inspectCodePath";
@@ -36,8 +37,6 @@ public class ReSharperPlugin extends SonarPlugin {
 
   public static final String CS_REPORT_PATH_KEY = "sonar.resharper.cs.reportPath";
   public static final String VBNET_REPORT_PATH_KEY = "sonar.resharper.vbnet.reportPath";
-
-  public static final String OLD_INSTALL_DIRECTORY_KEY = "sonar.resharper.installDirectory";
 
   private static final String CATEGORY = "ReSharper";
   private static final String DEPRECATED_SUBCATEGORY = "Deprecated";
@@ -98,7 +97,6 @@ public class ReSharperPlugin extends SonarPlugin {
         .category(CATEGORY)
         .subCategory(DEPRECATED_SUBCATEGORY)
         .onQualifiers(Qualifiers.PROJECT)
-        .deprecatedKey(OLD_INSTALL_DIRECTORY_KEY)
         .build(),
 
       PropertyDefinition.builder(TIMEOUT_MINUTES_PROPERTY_KEY)
@@ -109,9 +107,7 @@ public class ReSharperPlugin extends SonarPlugin {
         .subCategory(DEPRECATED_SUBCATEGORY)
         .onQualifiers(Qualifiers.PROJECT)
         .type(PropertyType.INTEGER)
-        .build(),
-
-      deprecatedPropertyDefinition(OLD_INSTALL_DIRECTORY_KEY));
+        .build());
   }
 
   private static String deprecatedDescription(String description) {

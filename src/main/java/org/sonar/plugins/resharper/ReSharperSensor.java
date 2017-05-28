@@ -129,7 +129,9 @@ public class ReSharperSensor implements Sensor {
   private void parseReport(FileProvider fileProvider, ReSharperReportParser parser, File reportFile) {
     LOG.info("Parsing ReSharper report: " + reportFile);
     File solutionFile = new File(settings.getString(ReSharperPlugin.SOLUTION_FILE_PROPERTY_KEY));
-    List<ReSharperIssue> parse = parser.parse(reportFile);
+    String projectName = settings.getString(ReSharperPlugin.PROJECT_NAME_SONAR_PROPERTY_KEY);
+    LOG.info(ReSharperPlugin.PROJECT_NAME_SONAR_PROPERTY_KEY + " " + projectName);
+    List<ReSharperIssue> parse = parser.parse(reportFile, projectName);
     for (ReSharperIssue issue : parse) {
       if (!hasFileAndLine(issue)) {
         logSkippedIssue(issue, "which has no associated file.");
@@ -137,10 +139,30 @@ public class ReSharperSensor implements Sensor {
       }
 
       File file = fileProvider.fileInSolution(solutionFile, issue.filePath());
-      InputFile inputFile = fileSystem.inputFile(
-        fileSystem.predicates().and(
-          fileSystem.predicates().hasAbsolutePath(file.getAbsolutePath()),
-          fileSystem.predicates().hasType(InputFile.Type.MAIN)));
+
+      //The below code is implemented to try to resolve an issue where something is passing a wonky file path i.e.
+      // "D:\\vssrc\\GregsProject\\\"D:\\vssrc\\GregsProject\\Common Libraries\\Common Libraries\\Class1.cs\"";
+      //The below condition will attempt to detect this type of string and rip out only the full path to the file
+      if(file.getAbsolutePath().contains("\\\"") && file.getAbsolutePath().endsWith("\"")){
+        String badFilePath = file.getAbsolutePath();
+        int position = badFilePath.indexOf("\\\"");
+        String newPath = file.getAbsolutePath().substring(position + 2,file.getAbsolutePath().length()-1);
+
+        //change the file variable to the new filePath.
+        file = new File(newPath);
+      }
+
+      InputFile inputFile;
+      try {
+        inputFile = fileSystem.inputFile(
+                fileSystem.predicates().and(
+                        fileSystem.predicates().hasAbsolutePath(file.getAbsolutePath()),
+                        fileSystem.predicates().hasType(InputFile.Type.MAIN))
+        );
+      }catch (Exception ex){
+        logSkippedIssue(issue, "Failed to get input file: \"" + ex.getMessage() +"\"");
+        continue;
+      }
       if (inputFile == null) {
         logSkippedIssueOutsideOfSonarQube(issue, file);
       } else if (reSharperConf.languageKey().equals(inputFile.language())) {
