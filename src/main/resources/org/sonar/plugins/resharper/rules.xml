@@ -3986,11 +3986,6 @@
     <description><![CDATA[Type parameter hides type parameter declared in outer scope]]></description>
   </rule>
   <rule key="TypeScriptErrors">
-    <priority>CRITICAL</priority>
-    <name><![CDATA[]]></name>
-    <description><![CDATA[]]></description>
-  </rule>
-  <rule key="TypeScriptErrors">
     <priority>MAJOR</priority>
     <name><![CDATA[]]></name>
     <description><![CDATA[]]></description>
