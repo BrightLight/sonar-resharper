@@ -225,11 +225,6 @@
     <name><![CDATA[ASP.NET Warning]]></name>
     <description><![CDATA[ASP.NET Warning]]></description>
   </rule>
-  <rule key="AspErrors">
-    <priority>CRITICAL</priority>
-    <name><![CDATA[]]></name>
-    <description><![CDATA[]]></description>
-  </rule>
   <rule key="AspOdsMethodReferenceResolveError">
     <priority>CRITICAL</priority>
     <name><![CDATA[Object data source method resolve problem]]></name>
@@ -285,11 +280,6 @@
     <name><![CDATA[Path error]]></name>
     <description><![CDATA[Path error]]></description>
   </rule>
-  <rule key="AsxxErrors">
-    <priority>CRITICAL</priority>
-    <name><![CDATA[]]></name>
-    <description><![CDATA[]]></description>
-  </rule>
   <rule key="AutoPropertyCanBeMadeGetOnly.Global">
     <priority>INFO</priority>
     <name><![CDATA[Auto-property can be made get-only: Non-private accessibility]]></name>
@@ -330,20 +320,10 @@
     <name><![CDATA[Redeclaration of let/const]]></name>
     <description><![CDATA[Redeclaration of let/const]]></description>
   </rule>
-  <rule key="BuildScriptErrors">
-    <priority>CRITICAL</priority>
-    <name><![CDATA[]]></name>
-    <description><![CDATA[]]></description>
-  </rule>
   <rule key="BuiltInTypeReferenceStyle">
     <priority>MINOR</priority>
     <name><![CDATA[Replace built-in type reference with a CLR type name or a keyword]]></name>
     <description><![CDATA[<h2>JetBrains Code Inspection Wiki</h2> <p><a href="https://www.jetbrains.com/resharperplatform/help?Keyword=BuiltInTypeReferenceStyle">See JetBrains documentation.</a></p>]]></description>
-  </rule>
-  <rule key="CSharpErrors">
-    <priority>CRITICAL</priority>
-    <name><![CDATA[]]></name>
-    <description><![CDATA[]]></description>
   </rule>
   <rule key="CSharpWarnings::CS0078">
     <priority>MAJOR</priority>
@@ -694,11 +674,6 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Co-variant array conversion]]></name>
     <description><![CDATA[<h2>JetBrains Code Inspection Wiki</h2> <p><a href="https://www.jetbrains.com/resharperplatform/help?Keyword=CoVariantArrayConversion">See JetBrains documentation.</a></p>]]></description>
-  </rule>
-  <rule key="CodeSmell">
-    <priority>CRITICAL</priority>
-    <name><![CDATA[]]></name>
-    <description><![CDATA[]]></description>
   </rule>
   <rule key="CoercedEqualsUsing">
     <priority>MAJOR</priority>
@@ -1515,11 +1490,6 @@
     <name><![CDATA[CSS feature is not supported by a specific browser]]></name>
     <description><![CDATA[CSS feature is not supported by a specific browser]]></description>
   </rule>
-  <rule key="CssErrors">
-    <priority>CRITICAL</priority>
-    <name><![CDATA[]]></name>
-    <description><![CDATA[]]></description>
-  </rule>
   <rule key="CssNotResolved">
     <priority>CRITICAL</priority>
     <name><![CDATA[Unknown CSS symbol]]></name>
@@ -1965,16 +1935,6 @@
     <name><![CDATA[Html Warning]]></name>
     <description><![CDATA[Html Warning]]></description>
   </rule>
-  <rule key="HtmlErrors">
-    <priority>CRITICAL</priority>
-    <name><![CDATA[]]></name>
-    <description><![CDATA[]]></description>
-  </rule>
-  <rule key="IdentifierHighlightings">
-    <priority>CRITICAL</priority>
-    <name><![CDATA[]]></name>
-    <description><![CDATA[]]></description>
-  </rule>
   <rule key="ImplicitAnyError">
     <priority>CRITICAL</priority>
     <name><![CDATA['Implicit any' inspection when NoImplicitAny is set]]></name>
@@ -2119,11 +2079,6 @@
     <priority>MAJOR</priority>
     <name><![CDATA[Iterator never returns]]></name>
     <description><![CDATA[Iterator never returns]]></description>
-  </rule>
-  <rule key="JScriptErrors">
-    <priority>CRITICAL</priority>
-    <name><![CDATA[]]></name>
-    <description><![CDATA[]]></description>
   </rule>
   <rule key="JoinDeclarationAndInitializer">
     <priority>INFO</priority>
@@ -2815,11 +2770,6 @@
     <name><![CDATA[Property setter must have a single parameter]]></name>
     <description><![CDATA[Property setter must have a single parameter]]></description>
   </rule>
-  <rule key="ProtobufErrors">
-    <priority>CRITICAL</priority>
-    <name><![CDATA[]]></name>
-    <description><![CDATA[]]></description>
-  </rule>
   <rule key="PublicConstructorInAbstractClass">
     <priority>INFO</priority>
     <name><![CDATA[Make constructor in abstract class protected]]></name>
@@ -2854,11 +2804,6 @@
     <priority>CRITICAL</priority>
     <name><![CDATA[Unknown Razor section]]></name>
     <description><![CDATA[Unknown Razor section]]></description>
-  </rule>
-  <rule key="RazorErrors">
-    <priority>CRITICAL</priority>
-    <name><![CDATA[]]></name>
-    <description><![CDATA[]]></description>
   </rule>
   <rule key="ReadAccessInDoubleCheckLocking">
     <priority>MAJOR</priority>
@@ -3284,11 +3229,6 @@
     <priority>MAJOR</priority>
     <name><![CDATA['Object.ReferenceEquals' is always false because it is called with value type]]></name>
     <description><![CDATA['Object.ReferenceEquals' is always false because it is called with value type]]></description>
-  </rule>
-  <rule key="RegExpErrors">
-    <priority>CRITICAL</priority>
-    <name><![CDATA[]]></name>
-    <description><![CDATA[]]></description>
   </rule>
   <rule key="RemoveConstructorInvocation">
     <priority>INFO</priority>
@@ -3985,11 +3925,6 @@
     <name><![CDATA[Type parameter hides type parameter declared in outer scope]]></name>
     <description><![CDATA[Type parameter hides type parameter declared in outer scope]]></description>
   </rule>
-  <rule key="TypeScriptErrors">
-    <priority>MAJOR</priority>
-    <name><![CDATA[]]></name>
-    <description><![CDATA[]]></description>
-  </rule>
   <rule key="UlTagContainsNonLiElements">
     <priority>MINOR</priority>
     <name><![CDATA[Elements not allowed in context: &lt;ul&gt; contains elements other than &lt;li&gt; or &lt;li&gt; is unclosed]]></name>
@@ -4409,11 +4344,6 @@
     <priority>INFO</priority>
     <name><![CDATA[Check for reference equality instead: Check for reference equality instead]]></name>
     <description><![CDATA[Check for reference equality instead: Check for reference equality instead]]></description>
-  </rule>
-  <rule key="VBErrors">
-    <priority>CRITICAL</priority>
-    <name><![CDATA[]]></name>
-    <description><![CDATA[]]></description>
   </rule>
   <rule key="VBPossibleMistakenArgument">
     <priority>MAJOR</priority>
@@ -4970,11 +4900,6 @@
     <name><![CDATA[Referenced path cannot be found in the website]]></name>
     <description><![CDATA[Referenced path cannot be found in the website]]></description>
   </rule>
-  <rule key="WebConfigErrors">
-    <priority>CRITICAL</priority>
-    <name><![CDATA[]]></name>
-    <description><![CDATA[]]></description>
-  </rule>
   <rule key="WithStatementUsingError">
     <priority>CRITICAL</priority>
     <name><![CDATA[Using of 'with' statements in 'strict mode']]></name>
@@ -4999,21 +4924,6 @@
     <priority>MINOR</priority>
     <name><![CDATA[Non-compliant path style inside 'require']]></name>
     <description><![CDATA[Non-compliant path style inside 'require']]></description>
-  </rule>
-  <rule key="XAMLErrors">
-    <priority>CRITICAL</priority>
-    <name><![CDATA[]]></name>
-    <description><![CDATA[]]></description>
-  </rule>
-  <rule key="XMLErrors">
-    <priority>CRITICAL</priority>
-    <name><![CDATA[]]></name>
-    <description><![CDATA[]]></description>
-  </rule>
-  <rule key="XMLWarnings">
-    <priority>MAJOR</priority>
-    <name><![CDATA[]]></name>
-    <description><![CDATA[]]></description>
   </rule>
   <rule key="Xaml.BindingWithContextNotResolved">
     <priority>MAJOR</priority>
