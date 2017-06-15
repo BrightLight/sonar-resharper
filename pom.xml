@@ -56,8 +56,8 @@
   <properties>
     <sonar.pluginName>ReSharper</sonar.pluginName>
     <sonar.pluginClass>org.sonar.plugins.resharper.ReSharperPlugin</sonar.pluginClass>
-    <sonarqube.version>4.5.2</sonarqube.version>
-    <sslrSquidVersion>2.6</sslrSquidVersion>
+    <sonarqube.version>5.6</sonarqube.version>
+    <sslrSquidVersion>2.6.1</sslrSquidVersion>
 	<bintray.package>sonar-resharper</bintray.package>
 
     <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
@@ -65,13 +65,13 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.codehaus.sonar</groupId>
+      <groupId>org.sonarsource.sonarqube</groupId>
       <artifactId>sonar-plugin-api</artifactId>
       <scope>provided</scope>
       <version>${sonarqube.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.codehaus.sonar.sslr-squid-bridge</groupId>
+      <groupId>org.sonarsource.sslr-squid-bridge</groupId>
       <artifactId>sslr-squid-bridge</artifactId>
       <version>${sslrSquidVersion}</version>
       <exclusions>

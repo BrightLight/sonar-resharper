@@ -34,6 +34,7 @@ import org.sonar.plugins.resharper.CSharpReSharperProvider.CSharpReSharperSensor
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.lang.reflect.Constructor;
+import java.nio.file.Paths;
 import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
@@ -87,7 +88,7 @@ public class CSharpReSharperProviderTest {
 
   @Test
   public void testSensorInstantiation() throws Exception {
-    CSharpReSharperSensor sensor = new CSharpReSharperSensor(new Settings(), mock(RulesProfile.class), new DefaultFileSystem(), mock(ResourcePerspectives.class));
+    CSharpReSharperSensor sensor = new CSharpReSharperSensor(new Settings(), mock(RulesProfile.class), new DefaultFileSystem(Paths.get("")), mock(ResourcePerspectives.class));
     ReSharperConfiguration configuration = sensor.getConfiguration();
     assertThat(configuration.languageKey()).isEqualTo("cs");
     assertThat(configuration.repositoryKey()).isEqualTo("resharper-cs");

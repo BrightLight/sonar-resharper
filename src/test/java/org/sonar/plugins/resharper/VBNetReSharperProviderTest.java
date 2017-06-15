@@ -34,6 +34,7 @@ import org.sonar.plugins.resharper.VBNetReSharperProvider.VBNetReSharperSensor;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.lang.reflect.Constructor;
+import java.nio.file.Paths;
 import java.util.List;
 
 import static org.fest.assertions.Assertions.assertThat;
@@ -87,7 +88,7 @@ public class VBNetReSharperProviderTest {
 
   @Test
   public void testSensorInstantiation() throws Exception {
-    VBNetReSharperSensor sensor = new VBNetReSharperSensor(new Settings(), mock(RulesProfile.class), new DefaultFileSystem(), mock(ResourcePerspectives.class));
+    VBNetReSharperSensor sensor = new VBNetReSharperSensor(new Settings(), mock(RulesProfile.class), new DefaultFileSystem(Paths.get("")), mock(ResourcePerspectives.class));
     ReSharperConfiguration configuration = sensor.getConfiguration();
     assertThat(configuration.languageKey()).isEqualTo("vbnet");
     assertThat(configuration.repositoryKey()).isEqualTo("resharper-vbnet");

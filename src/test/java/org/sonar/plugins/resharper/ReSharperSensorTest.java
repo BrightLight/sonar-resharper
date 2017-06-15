@@ -41,6 +41,7 @@ import org.sonar.api.rules.ActiveRule;
 
 import javax.annotation.Nullable;
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +52,8 @@ import static org.mockito.Mockito.when;
 
 public class ReSharperSensorTest {
 
+  private static final String moduleKey = "";
+
   @Rule
   public ExpectedException thrown = ExpectedException.none();
 
@@ -58,7 +61,7 @@ public class ReSharperSensorTest {
   public void shouldExecuteOnProject() {
     Settings settings = mock(Settings.class);
     RulesProfile profile = mock(RulesProfile.class);
-    DefaultFileSystem fileSystem = new DefaultFileSystem();
+    DefaultFileSystem fileSystem = new DefaultFileSystem(Paths.get(""));
     ResourcePerspectives perspectives = mock(ResourcePerspectives.class);
 
     Project project = mock(Project.class);
@@ -69,11 +72,11 @@ public class ReSharperSensorTest {
 
     assertThat(sensor.shouldExecuteOnProject(project)).isFalse();
 
-    fileSystem.add(new DefaultInputFile("").setAbsolutePath("").setLanguage("foo"));
+    fileSystem.add(new DefaultInputFile("", "").setLanguage("foo"));
     when(profile.getActiveRulesByRepository("foo-resharper")).thenReturn(ImmutableList.<ActiveRule>of());
     assertThat(sensor.shouldExecuteOnProject(project)).isFalse();
 
-    fileSystem.add(new DefaultInputFile("").setAbsolutePath("").setLanguage("lang"));
+    fileSystem.add(new DefaultInputFile("", "").setLanguage("lang"));
     when(profile.getActiveRulesByRepository("foo-resharper")).thenReturn(ImmutableList.of(mock(ActiveRule.class)));
     assertThat(sensor.shouldExecuteOnProject(project)).isTrue();
 
@@ -91,7 +94,7 @@ public class ReSharperSensorTest {
     settings.setProperty(reportPathKey, "src/test/resources/SensorTest/report.xml");
 
     RulesProfile profile = mock(RulesProfile.class);
-    DefaultFileSystem fileSystem = new DefaultFileSystem();
+    DefaultFileSystem fileSystem = new DefaultFileSystem(Paths.get(""));
     ResourcePerspectives perspectives = mock(ResourcePerspectives.class);
 
     ReSharperSensor sensor = new ReSharperSensor(
@@ -104,9 +107,9 @@ public class ReSharperSensorTest {
     File workingDir = new File("src/test/resources/SensorTest");
     fileSystem.setWorkDir(workingDir);
 
-    DefaultInputFile class1Cs = new DefaultInputFile("MyLibrary/Class1.cs").setAbsolutePath(new File("MyLibrary/Class1.cs").getAbsolutePath()).setLanguage(languageKey);
+    DefaultInputFile class1Cs = new DefaultInputFile(moduleKey, "MyLibrary/Class1.cs").setLanguage(languageKey);
     fileSystem.add(class1Cs);
-    DefaultInputFile assemblyInfoCs = new DefaultInputFile("MyLibrary/Properties/AssemblyInfo.cs").setAbsolutePath(new File("MyLibrary/Properties/AssemblyInfo.cs").getAbsolutePath()).setLanguage(languageKey);
+    DefaultInputFile assemblyInfoCs = new DefaultInputFile(moduleKey, "MyLibrary/Properties/AssemblyInfo.cs").setLanguage(languageKey);
     fileSystem.add(assemblyInfoCs);
 
     Issue issue1 = mock(Issue.class);
@@ -141,7 +144,7 @@ public class ReSharperSensorTest {
   public void analyze_run_inspect_code() throws Exception {
     Settings settings = createSettings("MyLibrary", "CSharpPlayground.sln", "inspectcode.exe");
     RulesProfile profile = mock(RulesProfile.class);
-    DefaultFileSystem fileSystem = new DefaultFileSystem();
+    DefaultFileSystem fileSystem = new DefaultFileSystem(Paths.get(""));
     ResourcePerspectives perspectives = mock(ResourcePerspectives.class);
 
     String languageKey = "foo";
@@ -160,20 +163,20 @@ public class ReSharperSensorTest {
 
     File fileNotInSonarQube = mock(File.class);
     when(fileNotInSonarQube.getAbsolutePath()).thenReturn("fileNotInSonarQube");
-    fileSystem.add(new DefaultInputFile("fileNotInSonarQube").setAbsolutePath("fileNotInSonarQube").setLanguage(languageKey));
+    fileSystem.add(new DefaultInputFile(moduleKey, "fileNotInSonarQube").setLanguage(languageKey));
 
     File fooFileWithIssuable = mock(File.class);
     when(fooFileWithIssuable.getAbsolutePath()).thenReturn("fooFileWithIssuable");
-    DefaultInputFile inputFileWithIssues = new DefaultInputFile("fooFileWithIssuable").setAbsolutePath("fooFileWithIssuable").setLanguage(languageKey);
+    DefaultInputFile inputFileWithIssues = new DefaultInputFile(moduleKey, "fooFileWithIssuable").setLanguage(languageKey);
     fileSystem.add(inputFileWithIssues);
 
     File fooFileWithoutIssuable = mock(File.class);
     when(fooFileWithoutIssuable.getAbsolutePath()).thenReturn("fooFileWithoutIssuable");
-    fileSystem.add(new DefaultInputFile("fooFileWithoutIssuable").setAbsolutePath("fooFileWithoutIssuable").setLanguage(languageKey));
+    fileSystem.add(new DefaultInputFile(moduleKey, "fooFileWithoutIssuable").setLanguage(languageKey));
 
     File barFile = mock(File.class);
     when(barFile.getAbsolutePath()).thenReturn("barFile");
-    fileSystem.add(new DefaultInputFile("barFile").setAbsolutePath("barFile"));
+    fileSystem.add(new DefaultInputFile(moduleKey, "barFile"));
 
     when(fileProvider.fileInSolution(Mockito.any(File.class), Mockito.eq("Class3.cs"))).thenReturn(fileNotInSonarQube);
     when(fileProvider.fileInSolution(Mockito.any(File.class), Mockito.eq("Class4.cs"))).thenReturn(fooFileWithIssuable);
