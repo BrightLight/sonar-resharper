@@ -72,7 +72,7 @@ public class VBNetReSharperProviderTest {
     assertThat(repo.key()).isEqualTo("resharper-vbnet");
 
     List<RulesDefinition.Rule> rules = repo.rules();
-    assertThat(rules.size()).isEqualTo(675);
+    assertThat(rules.size()).isEqualTo(1022);
     boolean atLeastOneSqale = false;
     for (RulesDefinition.Rule rule : rules) {
       assertThat(rule.key()).isNotNull();
