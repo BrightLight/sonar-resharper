@@ -27,9 +27,4 @@ import static org.fest.assertions.Assertions.assertThat;
 
 public class ReSharperExecutorTest {
 
-  @Test
-  public void testGetExecutable() throws Exception {
-    assertThat(ReSharperExecutor.getExecutable("a")).isEqualTo(new File("a", ReSharperExecutor.EXECUTABLE).getAbsolutePath());
-    assertThat(ReSharperExecutor.getExecutable(ReSharperExecutor.EXECUTABLE)).isEqualTo(ReSharperExecutor.EXECUTABLE);
-  }
 }

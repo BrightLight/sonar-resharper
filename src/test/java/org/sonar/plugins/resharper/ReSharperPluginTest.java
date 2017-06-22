@@ -34,7 +34,6 @@ import static org.fest.assertions.Assertions.assertThat;
 public class ReSharperPluginTest {
 
   @Test
-  @Ignore
   public void test() {
     assertThat(nonProperties(new ReSharperPlugin().getExtensions())).containsOnly(
       CSharpReSharperProvider.CSharpReSharperRulesDefinition.class,
@@ -53,9 +52,7 @@ public class ReSharperPluginTest {
       "sonar.resharper.projectName",
       "sonar.resharper.solutionFile",
       "sonar.resharper.inspectCodePath",
-      "sonar.resharper.timeoutMinutes",
-
-      "sonar.resharper.installDirectory");
+      "sonar.resharper.timeoutMinutes");
   }
 
   private static Set<String> nonProperties(List extensions) {
