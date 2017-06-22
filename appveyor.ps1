@@ -143,7 +143,7 @@ switch ($env:RUN_ITS)
 		try
 		{
 			echo "Running mvn install"
-			mvn install "--batch-mode" "-DcsharpVersion=4.1" "-Dsonar.runtimeVersion=$env:SQ_VERSION" "-Dmaven.test.redirectTestOutputToFile=false" "-Dsonar.jdbc.dialect=embedded" "-Dorchestrator.updateCenterUrl=http://update.sonarsource.org/update-center-dev.properties" "-Dmaven.localRepository=$env:USERPROFILE\.m2\repository"
+			mvn install "--batch-mode" "-DcsharpVersion=6.0" "-Dsonar.runtimeVersion=$env:SQ_VERSION" "-Dmaven.test.redirectTestOutputToFile=false" "-Dsonar.jdbc.dialect=embedded" "-Dorchestrator.updateCenterUrl=http://update.sonarsource.org/update-center-dev.properties" "-Dmaven.localRepository=$env:USERPROFILE\.m2\repository"
 			Push-AppveyorArtifact "C:\projects\sonar-resharper\target\sonar-resharper-plugin.jar" -FileName "sonar-resharper-plugin-v$env:APPVEYOR_BUILD_VERSION-$env:SQ_POSTFIX.jar"
 			CheckLastExitCode
 		}
