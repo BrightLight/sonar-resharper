@@ -19,12 +19,6 @@
  */
 package org.sonar.plugins.resharper;
 
-import org.junit.Test;
-
-import java.io.File;
-
-import static org.fest.assertions.Assertions.assertThat;
-
 public class ReSharperExecutorTest {
 
 }

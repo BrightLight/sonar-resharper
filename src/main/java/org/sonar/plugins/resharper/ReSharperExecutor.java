@@ -19,7 +19,6 @@
  */
 package org.sonar.plugins.resharper;
 
-import com.google.common.annotations.VisibleForTesting;
 import org.sonar.api.utils.command.Command;
 import org.sonar.api.utils.command.CommandException;
 import org.sonar.api.utils.command.CommandExecutor;
