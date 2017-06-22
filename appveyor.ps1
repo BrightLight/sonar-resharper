@@ -131,7 +131,7 @@ switch ($env:RUN_ITS)
 		echo "InstallAppveyorTools complete."
 
 		echo "Running mvn package"
-		mvn package "--batch-mode" "-Dsource.skip=true" "-Denforcer.skip=true" "-Danimal.sniffer.skip=true" "-Dmaven.test.skip=true" "--errors"
+		mvn package "--batch-mode" "-Dsource.skip=true" "-Denforcer.skip=true" "-Danimal.sniffer.skip=true" "-Dmaven.test.skip=true" "--errors" "-Dmaven.compiler.showDeprecation=true"
 		CheckLastExitCode
 
 		if ($env:SQ_VERSION -eq "DEV")
