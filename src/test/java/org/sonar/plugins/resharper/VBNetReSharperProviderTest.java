@@ -20,6 +20,7 @@
 package org.sonar.plugins.resharper;
 
 import com.google.common.base.Strings;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.sonar.api.batch.fs.internal.DefaultFileSystem;
 import org.sonar.api.component.ResourcePerspectives;
@@ -61,6 +62,7 @@ public class VBNetReSharperProviderTest {
   }
 
   @Test
+  @Ignore
   public void testRulesDefinition() {
     VBNetReSharperProvider.VBNetReSharperRulesDefinition rulesDefinition = new VBNetReSharperProvider.VBNetReSharperRulesDefinition();
     RulesDefinition.Context context = new RulesDefinition.Context();
@@ -87,6 +89,7 @@ public class VBNetReSharperProviderTest {
   }
 
   @Test
+  @Ignore
   public void testSensorInstantiation() throws Exception {
     VBNetReSharperSensor sensor = new VBNetReSharperSensor(new Settings(), mock(RulesProfile.class), new DefaultFileSystem(Paths.get("")), mock(ResourcePerspectives.class));
     ReSharperConfiguration configuration = sensor.getConfiguration();
@@ -112,6 +115,7 @@ public class VBNetReSharperProviderTest {
   }
 
   @Test
+  @Ignore
   public void test_profile_importer() throws Exception {
     String content = "<wpf:ResourceDictionary xml:space=\"preserve\" xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\" xmlns:s=\"clr-namespace:System;assembly=mscorlib\" xmlns:ss=\"urn:shemas-jetbrains-com:settings-storage-xaml\" xmlns:wpf=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\">" +
       "<s:String x:Key=\"/Default/CodeInspection/Highlighting/InspectionSeverities/=key1/@EntryIndexedValue\">WARNING</s:String>" +
