@@ -59,7 +59,6 @@ public class ReSharperSensorTest {
   public ExpectedException thrown = ExpectedException.none();
 
   @Test
-  @Ignore
   public void shouldExecuteOnProject() {
     Settings settings = mock(Settings.class);
     RulesProfile profile = mock(RulesProfile.class);
@@ -231,7 +230,6 @@ public class ReSharperSensorTest {
   }
 
   @Test
-  @Ignore
   public void check_project_name_property() {
     thrown.expectMessage(ReSharperPlugin.CS_REPORT_PATH_KEY);
     thrown.expect(IllegalStateException.class);
@@ -241,7 +239,6 @@ public class ReSharperSensorTest {
   }
 
   @Test
-  @Ignore
   public void check_solution_file_property() {
     thrown.expect(IllegalStateException.class);
     thrown.expectMessage(ReSharperPlugin.SOLUTION_FILE_PROPERTY_KEY);
