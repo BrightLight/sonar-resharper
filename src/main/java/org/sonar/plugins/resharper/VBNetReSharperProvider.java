@@ -53,7 +53,7 @@ public class VBNetReSharperProvider {
   public static class VBNetReSharperSensor extends ReSharperSensor {
 
     public VBNetReSharperSensor(Settings settings, RulesProfile profile, FileSystem fileSystem, ResourcePerspectives perspectives) {
-      super(RESHARPER_CONF, settings, profile, fileSystem, perspectives);
+      super(RESHARPER_CONF, settings, profile, fileSystem);
     }
 
   }

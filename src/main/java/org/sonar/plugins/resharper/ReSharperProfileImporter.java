@@ -19,12 +19,16 @@
  */
 package org.sonar.plugins.resharper;
 
-import com.google.common.collect.ImmutableMap;
-import org.apache.commons.io.input.ReaderInputStream;
+import java.io.Reader;
+import java.util.Map;
+
+import javax.xml.stream.XMLStreamException;
+
 import org.codehaus.staxmate.in.SMHierarchicCursor;
 import org.codehaus.staxmate.in.SMInputCursor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sonar.api.internal.apachecommons.io.input.ReaderInputStream;
 import org.sonar.api.profiles.ProfileImporter;
 import org.sonar.api.profiles.RulesProfile;
 import org.sonar.api.rules.Rule;
@@ -32,9 +36,7 @@ import org.sonar.api.rules.RulePriority;
 import org.sonar.api.utils.StaxParser;
 import org.sonar.api.utils.ValidationMessages;
 
-import javax.xml.stream.XMLStreamException;
-import java.io.Reader;
-import java.util.Map;
+import com.google.common.collect.ImmutableMap;
 
 public class ReSharperProfileImporter extends ProfileImporter {
 

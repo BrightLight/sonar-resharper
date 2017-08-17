@@ -23,15 +23,16 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.sonar.api.batch.Sensor;
-import org.sonar.api.batch.SensorContext;
+import org.sonar.api.batch.sensor.Sensor;
+import org.sonar.api.batch.sensor.SensorContext;
+import org.sonar.api.batch.sensor.SensorDescriptor;
+import org.sonar.api.batch.sensor.issue.NewIssue;
+import org.sonar.api.batch.sensor.issue.NewIssueLocation;
 import org.sonar.api.batch.fs.FileSystem;
 import org.sonar.api.batch.fs.InputFile;
-import org.sonar.api.component.ResourcePerspectives;
 import org.sonar.api.config.Settings;
 import org.sonar.api.issue.Issuable;
 import org.sonar.api.profiles.RulesProfile;
-import org.sonar.api.resources.Project;
 import org.sonar.api.rule.RuleKey;
 import org.sonar.api.rules.ActiveRule;
 
@@ -46,14 +47,12 @@ public class ReSharperSensor implements Sensor {
   private final Settings settings;
   private final RulesProfile profile;
   private final FileSystem fileSystem;
-  private final ResourcePerspectives perspectives;
 
-  public ReSharperSensor(ReSharperConfiguration reSharperConf, Settings settings, RulesProfile profile, FileSystem fileSystem, ResourcePerspectives perspectives) {
+  public ReSharperSensor(ReSharperConfiguration reSharperConf, Settings settings, RulesProfile profile, FileSystem fileSystem) {
     this.reSharperConf = reSharperConf;
     this.settings = settings;
     this.profile = profile;
     this.fileSystem = fileSystem;
-    this.perspectives = perspectives;
   }
 
   @VisibleForTesting
@@ -61,8 +60,7 @@ public class ReSharperSensor implements Sensor {
     return reSharperConf;
   }
 
-  @Override
-  public boolean shouldExecuteOnProject(Project project) {
+  private boolean shouldExecuteOnProject() {
     boolean shouldExecute;
 
     if (!hasFilesToAnalyze()) {
@@ -82,14 +80,26 @@ public class ReSharperSensor implements Sensor {
   }
 
   @Override
-  public void analyse(Project project, SensorContext context) {
+  public void describe(SensorDescriptor descriptor) {
+    descriptor
+      .name("ReSharper")
+      .onlyOnLanguage("cs")
+      .createIssuesForRuleRepository("resharper-cs");
+  }
+
+  @Override
+  public void execute(SensorContext context) {
+    if (!shouldExecuteOnProject()) {
+      return;
+    }
+
     FileProvider fileProvider = new FileProvider();
     ReSharperReportParser parser = new ReSharperReportParser();
     if (!settings.hasKey(ReSharperPlugin.PROJECT_NAME_PROPERTY_KEY)) {
       logMessageIfLegacySettingsDefined();
-      analyseReportPath(fileProvider, parser);
+      analyseReportPath(context, fileProvider, parser);
     } else {
-      analyseRunInspectCode(fileProvider, new ReSharperDotSettingsWriter(), parser, new ReSharperExecutor());
+      analyseRunInspectCode(context, fileProvider, new ReSharperDotSettingsWriter(), parser, new ReSharperExecutor());
     }
   }
 
@@ -100,15 +110,15 @@ public class ReSharperSensor implements Sensor {
     }
   }
 
-  private void analyseReportPath(FileProvider fileProvider, ReSharperReportParser parser) {
+  private void analyseReportPath(SensorContext context, FileProvider fileProvider, ReSharperReportParser parser) {
     checkProperty(settings, reSharperConf.reportPathKey());
     checkProperty(settings, ReSharperPlugin.SOLUTION_FILE_PROPERTY_KEY);
     File reportFile = new File(settings.getString(reSharperConf.reportPathKey()));
-    parseReport(fileProvider, parser, reportFile);
+    parseReport(context, fileProvider, parser, reportFile);
   }
 
   @VisibleForTesting
-  void analyseRunInspectCode(FileProvider fileProvider, ReSharperDotSettingsWriter writer, ReSharperReportParser parser, ReSharperExecutor executor) {
+  void analyseRunInspectCode(SensorContext context, FileProvider fileProvider, ReSharperDotSettingsWriter writer, ReSharperReportParser parser, ReSharperExecutor executor) {
     LOG.warn("ReSharper plugin is running in deprecated mode. inspectcode.exe should be ran outside the " +
       "plugin and the report imported through " + reSharperConf.reportPathKey() + " property.");
     checkProperty(settings, ReSharperPlugin.PROJECT_NAME_PROPERTY_KEY);
@@ -123,10 +133,10 @@ public class ReSharperSensor implements Sensor {
       settings.getString(ReSharperPlugin.INSPECTCODE_PATH_PROPERTY_KEY), settings.getString(ReSharperPlugin.PROJECT_NAME_PROPERTY_KEY),
       settings.getString(ReSharperPlugin.SOLUTION_FILE_PROPERTY_KEY), rulesetFile, reportFile, settings.getInt(ReSharperPlugin.TIMEOUT_MINUTES_PROPERTY_KEY));
 
-    parseReport(fileProvider, parser, reportFile);
+    parseReport(context, fileProvider, parser, reportFile);
   }
 
-  private void parseReport(FileProvider fileProvider, ReSharperReportParser parser, File reportFile) {
+  private void parseReport(SensorContext context, FileProvider fileProvider, ReSharperReportParser parser, File reportFile) {
     LOG.info("Parsing ReSharper report: " + reportFile);
     File solutionFile = new File(settings.getString(ReSharperPlugin.SOLUTION_FILE_PROPERTY_KEY));
     String projectName = settings.getString(ReSharperPlugin.PROJECT_NAME_SONAR_PROPERTY_KEY);
@@ -166,18 +176,15 @@ public class ReSharperSensor implements Sensor {
       if (inputFile == null) {
         logSkippedIssueOutsideOfSonarQube(issue, file);
       } else if (reSharperConf.languageKey().equals(inputFile.language())) {
-        Issuable issuable = perspectives.as(Issuable.class, inputFile);
-        if (issuable == null) {
-          logSkippedIssueOutsideOfSonarQube(issue, file);
-        } else if (!enabledRuleKeys().contains(issue.ruleKey())) {
+        org.sonar.api.batch.rule.ActiveRule activeRule = context.activeRules().findByInternalKey("resharper-cs", issue.ruleKey());
+        if (activeRule == null) {
           logSkippedIssue(issue, "because the rule \"" + issue.ruleKey() + "\" is either missing or inactive in the quality profile.");
         } else {
-          issuable.addIssue(
-            issuable.newIssueBuilder()
-              .ruleKey(RuleKey.of(reSharperConf.repositoryKey(), issue.ruleKey()))
-              .line(issue.line())
-              .message(issue.message())
-              .build());
+          NewIssue newIssue = context.newIssue();          
+          newIssue
+            .at(newIssue.newLocation().on(context.module()).at(inputFile.selectLine(issue.line())).message(issue.message()))
+            .forRule(RuleKey.of(reSharperConf.repositoryKey(), issue.ruleKey()));
+          newIssue.save();
         }
       }
     }

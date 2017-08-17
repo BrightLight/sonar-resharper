@@ -127,8 +127,9 @@ public class ReSharperReportParser {
       String typeId = getRequiredAttribute("TypeId");
       String filePath = getAttribute("File");
       Integer line = getIntAttribute("Line");
+      String offset = getAttribute("Offset"); // absolute offset within the file. PlugIn needs line and offset within that line
       String message = getRequiredAttribute("Message");
-      filesBuilder.add(new ReSharperIssue(stream.getLocation().getLineNumber(), typeId, filePath, line, message));
+      filesBuilder.add(new ReSharperIssue(stream.getLocation().getLineNumber(), typeId, filePath, offset, line, message));
     }
 
     private String getRequiredAttribute(String name) {

@@ -26,13 +26,15 @@ public class ReSharperIssue {
   private final int reportLine;
   private final String ruleKey;
   private final String filePath;
+  private final String offset; // absolute offset within the file. PlugIn needs line and offset within that line
   private final Integer line;
   private final String message;
 
-  public ReSharperIssue(int reportLine, String ruleKey, @Nullable String filePath, @Nullable Integer line, String message) {
+  public ReSharperIssue(int reportLine, String ruleKey, @Nullable String filePath, @Nullable String offset, @Nullable Integer line, String message) {
     this.reportLine = reportLine;
     this.ruleKey = ruleKey;
     this.filePath = filePath;
+    this.offset = offset;
     this.line = line;
     this.message = message;
   }
@@ -47,6 +49,11 @@ public class ReSharperIssue {
 
   public String filePath() {
     return filePath;
+  }
+  
+  // absolute offset within the file. PlugIn needs line and offset within that line
+  public String offset() {
+    return offset;
   }
 
   @Nullable

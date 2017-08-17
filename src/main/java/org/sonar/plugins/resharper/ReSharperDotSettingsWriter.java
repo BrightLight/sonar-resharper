@@ -20,7 +20,6 @@
 package org.sonar.plugins.resharper;
 
 import com.google.common.io.Files;
-import org.apache.commons.io.IOUtils;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -59,7 +58,7 @@ public class ReSharperDotSettingsWriter {
 
   private static void appendLine(Writer writer, String s) throws IOException {
     writer.write(s);
-    writer.write(IOUtils.LINE_SEPARATOR);
+    writer.write(java.lang.System.lineSeparator());
   }
 
 }

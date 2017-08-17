@@ -53,7 +53,7 @@ public class CSharpReSharperProvider {
   public static class CSharpReSharperSensor extends ReSharperSensor {
 
     public CSharpReSharperSensor(Settings settings, RulesProfile profile, FileSystem fileSystem, ResourcePerspectives perspectives) {
-      super(RESHARPER_CONF, settings, profile, fileSystem, perspectives);
+      super(RESHARPER_CONF, settings, profile, fileSystem);
     }
 
   }
