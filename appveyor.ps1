@@ -119,6 +119,8 @@ switch ($env:RUN_ITS)
 	{
 		InstallAppveyorTools
 
+		echo "InstallAppveyorTools complete."
+		echo "No ITS -> Running mvn verify"
 		mvn verify "--batch-mode" "-B" "-e" "-V"
 		CheckLastExitCode
 	}
@@ -126,8 +128,10 @@ switch ($env:RUN_ITS)
 	"true"
 	{
 		InstallAppveyorTools
+		echo "InstallAppveyorTools complete."
 
-		mvn package "--batch-mode" "-Dsource.skip=true" "-Denforcer.skip=true" "-Danimal.sniffer.skip=true" "-Dmaven.test.skip=true"
+		echo "Running mvn package"
+		mvn package "--batch-mode" "-Dsource.skip=true" "-Denforcer.skip=true" "-Danimal.sniffer.skip=true" "-Dmaven.test.skip=true" "--errors" "-Dmaven.compiler.showDeprecation=true"
 		CheckLastExitCode
 
 		if ($env:SQ_VERSION -eq "DEV")
@@ -138,7 +142,8 @@ switch ($env:RUN_ITS)
 		pushd its/plugin
 		try
 		{
-			mvn install "--batch-mode" "-DcsharpVersion=4.1" "-Dsonar.runtimeVersion=$env:SQ_VERSION" "-Dmaven.test.redirectTestOutputToFile=false" "-Dsonar.jdbc.dialect=embedded" "-Dorchestrator.updateCenterUrl=http://update.sonarsource.org/update-center-dev.properties" "-Dmaven.localRepository=$env:USERPROFILE\.m2\repository"
+			echo "Running mvn install"
+			mvn install "--batch-mode" "-DcsharpVersion=6.0" "-Dsonar.runtimeVersion=$env:SQ_VERSION" "-Dmaven.test.redirectTestOutputToFile=false" "-Dsonar.jdbc.dialect=embedded" "-Dorchestrator.updateCenterUrl=http://update.sonarsource.org/update-center-dev.properties" "-Dmaven.localRepository=$env:USERPROFILE\.m2\repository"
 			Push-AppveyorArtifact "C:\projects\sonar-resharper\target\sonar-resharper-plugin.jar" -FileName "sonar-resharper-plugin-v$env:APPVEYOR_BUILD_VERSION-$env:SQ_POSTFIX.jar"
 			CheckLastExitCode
 		}

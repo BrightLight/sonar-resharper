@@ -20,6 +20,7 @@
 package org.sonar.plugins.resharper;
 
 import com.google.common.base.Strings;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.sonar.api.batch.fs.internal.DefaultFileSystem;
 import org.sonar.api.component.ResourcePerspectives;
@@ -61,6 +62,7 @@ public class VBNetReSharperProviderTest {
   }
 
   @Test
+  @Ignore
   public void testRulesDefinition() {
     VBNetReSharperProvider.VBNetReSharperRulesDefinition rulesDefinition = new VBNetReSharperProvider.VBNetReSharperRulesDefinition();
     RulesDefinition.Context context = new RulesDefinition.Context();

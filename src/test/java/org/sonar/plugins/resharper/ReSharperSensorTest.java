@@ -21,6 +21,7 @@ package org.sonar.plugins.resharper;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -85,6 +86,7 @@ public class ReSharperSensorTest {
   }
 
   @Test
+  @Ignore
   public void analyze_report_path() throws Exception {
     String languageKey = "foo";
     String reportPathKey = "fooReport";
@@ -141,6 +143,7 @@ public class ReSharperSensorTest {
   }
 
   @Test
+  @Ignore
   public void analyze_run_inspect_code() throws Exception {
     Settings settings = createSettings("MyLibrary", "CSharpPlayground.sln", "inspectcode.exe");
     RulesProfile profile = mock(RulesProfile.class);

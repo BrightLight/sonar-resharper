@@ -118,15 +118,4 @@ public class ReSharperPlugin extends SonarPlugin {
     return "Deprecated - " + name;
   }
 
-  private static PropertyDefinition deprecatedPropertyDefinition(String oldKey) {
-    return PropertyDefinition
-      .builder(oldKey)
-      .name(deprecatedName(oldKey))
-      .description(DEPRECATED_DESCRIPTION)
-      .category(CATEGORY)
-      .subCategory(DEPRECATED_SUBCATEGORY)
-      .onQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE)
-      .build();
-  }
-
 }

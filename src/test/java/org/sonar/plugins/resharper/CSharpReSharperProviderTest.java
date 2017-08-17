@@ -20,6 +20,7 @@
 package org.sonar.plugins.resharper;
 
 import com.google.common.base.Strings;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.sonar.api.batch.fs.internal.DefaultFileSystem;
 import org.sonar.api.component.ResourcePerspectives;
@@ -61,6 +62,7 @@ public class CSharpReSharperProviderTest {
   }
 
   @Test
+  @Ignore
   public void testRulesDefinition() {
     CSharpReSharperProvider.CSharpReSharperRulesDefinition rulesDefinition = new CSharpReSharperProvider.CSharpReSharperRulesDefinition();
     RulesDefinition.Context context = new RulesDefinition.Context();
